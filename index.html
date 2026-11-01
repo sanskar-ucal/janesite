@@ -1,237 +1,145 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Jane Lee — Commerce student at the University of Ottawa, interested in healthcare analytics, technology, and making complex information clear." />
-  <meta name="theme-color" content="#161c25" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Jane Lee is a Commerce student at the University of Ottawa, focused on healthcare analytics, auditing, data, and thoughtful problem-solving." />
+  <meta name="theme-color" content="#131719" />
   <meta name="color-scheme" content="dark light" />
   <title>Jane Lee — Portfolio</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23161c25'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-size='32' font-style='italic' fill='%23e6e0d6'%3EJL%3C/text%3E%3C/svg%3E" />
-
-  <!-- Start in dark mode; use a saved manual choice if one exists. -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23131719'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-style='italic' font-size='33' fill='%23d4e3cf'%3Ej.%3C/text%3E%3C/svg%3E" />
   <script>
     (() => {
       try {
-        const saved = localStorage.getItem('jane-theme');
-        document.documentElement.dataset.theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
-      } catch (_) {
-        document.documentElement.dataset.theme = 'dark';
-      }
-      document.documentElement.classList.add('js');
+        const stored = localStorage.getItem('jane-portfolio-theme');
+        if (stored === 'dark' || stored === 'light') document.documentElement.dataset.theme = stored;
+      } catch (_) { /* Storage may be blocked */ }
+      document.documentElement.classList.add('has-js');
     })();
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="script.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-
-  <header class="nav-wrap">
+  <header class="site-header" id="top">
     <nav class="nav" aria-label="Main navigation">
-      <a class="nav-brand" href="#top" aria-label="Jane Lee, back to top">jl<span>.</span></a>
+      <a class="brand" href="#top" aria-label="Jane Lee — back to top"><span class="brand-mark">j<span>.</span></span><span class="brand-name">Jane Lee</span></a>
       <div class="nav-links">
-        <span class="nav-indicator" aria-hidden="true"></span>
-        <a class="nav-link" href="#about" data-section="about">About</a>
-        <a class="nav-link" href="#experience" data-section="experience">Experience</a>
-        <a class="nav-link nav-skills" href="#skills" data-section="skills">Skills</a>
-        <a class="nav-link" href="#contact" data-section="contact">Contact</a>
+        <a href="#about" data-nav="about">About</a>
+        <a href="#experience" data-nav="experience">Experience</a>
+        <a href="#skills" data-nav="skills">Skills</a>
+        <a href="#contact" data-nav="contact">Contact</a>
       </div>
-      <span class="nav-divider" aria-hidden="true"></span>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch color theme">
-        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-        </svg>
-        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M20.7 13.1A9 9 0 0 1 10.9 3.3a9 9 0 1 0 9.8 9.8Z"/>
-        </svg>
-        <span id="theme-label">Light</span>
+        <svg class="sun-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="moon-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 13.3A8.8 8.8 0 0 1 10.7 3.5a8.8 8.8 0 1 0 9.8 9.8Z"/></svg>
+        <span class="theme-label" id="theme-label">Light</span>
       </button>
     </nav>
   </header>
 
   <main id="main">
-    <section class="hero container" id="top" aria-labelledby="hero-title">
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="hero-grid">
-        <div class="hero-content">
-          <div class="eyebrow reveal"><span class="eyebrow-line"></span> A PORTFOLIO, IN PROGRESS <span class="eyebrow-year">/ 2026</span></div>
-          <h1 class="hero-title reveal" id="hero-title">Jane<br /><em>Lee<span class="hero-period">.</span></em></h1>
-          <div class="hero-summary reveal">
-            <p class="hero-lead">Making complex things <em>make sense.</em></p>
-            <p class="hero-description">Commerce student at the University of Ottawa, studying healthcare analytics. I like making messy information clear, whether that's a dashboard, a report, or an audit.</p>
-          </div>
-          <p class="hero-mobile-current reveal"><span class="status-dot" aria-hidden="true"></span> Currently at the Bank of Canada</p>
+    <section class="hero container" aria-labelledby="hero-heading">
+      <div class="hero-inner">
+        <div class="hero-main">
+          <p class="eyebrow hero-eyebrow reveal"><span class="live-dot" aria-hidden="true"></span> HELLO, I'M JANE LEE <span class="eyebrow-slash">/</span> OTTAWA, CANADA</p>
+          <h1 id="hero-heading" class="hero-heading reveal">Making sense<br />of <em>complexity.</em></h1>
+          <p class="hero-description reveal">I'm a Commerce student at the University of Ottawa, focused on healthcare analytics. I bring clarity to messy information — through data, audit, and thoughtful problem-solving.</p>
           <div class="hero-actions reveal">
-            <a class="button button-primary" href="#experience">Explore my work <span aria-hidden="true">↗</span></a>
-            <a class="text-link" href="mailto:janelee2082@gmail.com">Get in touch <span aria-hidden="true">↗</span></a>
+            <a class="button-primary" href="#experience">Explore my work <span aria-hidden="true">↗</span></a>
+            <a class="button-text" href="mailto:janelee2082@gmail.com">Get in touch <span aria-hidden="true">↗</span></a>
           </div>
         </div>
-
-        <aside class="hero-art reveal" aria-label="Currently at the Bank of Canada">
-          <div class="art-grid" aria-hidden="true"></div>
-          <div class="art-top">
-            <span>THE CURRENT CHAPTER</span>
-            <span class="art-symbol" aria-hidden="true">✳</span>
+        <aside class="hero-aside reveal" aria-label="Current position">
+          <div class="aside-head"><span>RIGHT NOW</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg></div>
+          <div class="aside-content">
+            <span class="aside-dot" aria-hidden="true"></span>
+            <p class="aside-date">SEPT — DEC 2026</p>
+            <h2>Internal Audit<br />Student</h2>
+            <p class="aside-org">Bank of Canada<br /><span>Ottawa, Ontario</span></p>
           </div>
-          <div class="art-orbit" aria-hidden="true">
-            <div class="orbit orbit-outer"></div>
-            <div class="orbit orbit-inner"></div>
-            <span class="orbit-glint"></span>
-            <span class="orbit-letter">j.</span>
-          </div>
-          <div class="art-bottom">
-            <div class="art-status"><span class="status-dot" aria-hidden="true"></span> SEP — DEC 2026</div>
-            <p>Internal Audit Student</p>
-            <span>Bank of Canada · Ottawa, ON</span>
-          </div>
+          <div class="aside-footer"><span>THE CURRENT CHAPTER</span><span>01 / 05</span></div>
         </aside>
       </div>
-      <div class="hero-foot reveal">
-        <span><span class="foot-dot" aria-hidden="true"></span> BASED IN OTTAWA, CANADA <span class="foot-sep">/</span> <time id="local-time">LOCAL TIME</time></span>
-        <a href="#about" class="scroll-cue">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a>
+      <div class="hero-bottom reveal">
+        <p><span class="mini-sun" aria-hidden="true">✳</span> A little curiosity goes a long way.</p>
+        <a href="#about">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a>
       </div>
     </section>
 
-    <section class="section container" id="about" aria-labelledby="about-title">
+    <div class="container"><div class="rule"></div></div>
+
+    <section class="section container about" id="about" aria-labelledby="about-heading">
       <div class="section-heading reveal">
-        <p class="section-index"><span>01</span> / A LITTLE INTRODUCTION</p>
-        <h2 id="about-title">Beyond the <em>résumé.</em></h2>
+        <span class="section-count">01 / ABOUT</span>
+        <h2 id="about-heading">A little about <em>me.</em></h2>
       </div>
-      <div class="section-content">
-        <p class="about-lead reveal">I'm drawn to work that sits at the intersection of <span>people, technology, and thoughtful problem-solving.</span></p>
-        <p class="body-copy reveal">I've done co-op terms at the Bank of Canada, RBC and Kyndryl, mostly in roles that check whether things work the way they should, and that keep projects on track.</p>
-        <p class="body-copy reveal">Before that I spent two summers in health research, which is where I got comfortable working with data and figuring things out on my own.</p>
-        <div class="education-card reveal">
-          <div class="education-icon" aria-hidden="true">u.</div>
-          <div class="education-info">
-            <span class="overline">EDUCATION</span>
-            <h3>University of Ottawa <span>· Telfer School of Management</span></h3>
-            <p>Honours Bachelor of Commerce, Healthcare Analytics (Co-op)</p>
-          </div>
+      <div class="section-body">
+        <p class="about-statement reveal">I like the work behind the scenes that makes everything else work <em>better.</em></p>
+        <div class="about-columns reveal">
+          <p>I've completed co-op terms at the Bank of Canada, RBC, and Kyndryl — working across internal audit, cybersecurity, and project delivery.</p>
+          <p>Before that, I spent two summers in health research, learning how to ask better questions, work with data, and turn findings into something useful.</p>
+        </div>
+        <div class="education reveal">
+          <div class="education-symbol" aria-hidden="true">u.</div>
+          <div class="education-text"><span class="kicker">EDUCATION</span><h3>University of Ottawa</h3><p>Telfer School of Management<br />Honours Bachelor of Commerce, Healthcare Analytics (Co-op)</p></div>
           <span class="education-year">2028 <small>EXPECTED</small></span>
         </div>
       </div>
     </section>
 
-    <section class="section container" id="experience" aria-labelledby="experience-title">
+    <div class="container"><div class="rule"></div></div>
+
+    <section class="section container experience" id="experience" aria-labelledby="experience-heading">
       <div class="section-heading reveal">
-        <p class="section-index"><span>02</span> / THE JOURNEY SO FAR</p>
-        <h2 id="experience-title">Where I've <em>worked.</em></h2>
+        <span class="section-count">02 / EXPERIENCE</span>
+        <h2 id="experience-heading">Where I've <em>been.</em></h2>
       </div>
-      <div class="section-content">
-        <ol class="experience-list">
-          <li class="experience-item reveal">
-            <div class="experience-date">SEP — DEC 2026</div>
-            <div class="experience-detail">
-              <div class="experience-title-row"><h3>Internal Audit Student</h3><span class="current-pill"><span class="status-dot" aria-hidden="true"></span> CURRENT</span></div>
-              <p class="experience-company">Bank of Canada <span>· Ottawa, ON</span></p>
-              <p class="experience-description">Reviewing how well the bank's IT controls work in practice, and pointing out where they could be stronger.</p>
-            </div>
-          </li>
-          <li class="experience-item reveal">
-            <div class="experience-date">JAN — AUG 2026</div>
-            <div class="experience-detail">
-              <h3>Project Control Intern</h3>
-              <p class="experience-company">RBC <span>· Toronto, ON</span></p>
-              <p class="experience-description">Part of RBC's 2026 Technology &amp; Operations cohort, on a cyber security team handling regulatory work. Wrote clear standards for how evidence gets collected and reviewed, and helped introduce AI tools that cut down review time.</p>
-            </div>
-          </li>
-          <li class="experience-item reveal">
-            <div class="experience-date">MAY — DEC 2025</div>
-            <div class="experience-detail">
-              <h3>Project Control Intern</h3>
-              <p class="experience-company">Kyndryl <span>· Toronto, ON</span></p>
-              <p class="experience-description">Supported project managers with monthly financial reviews for clients like McCain Foods and Laurentian Bank. Built Power BI dashboards to track how projects were doing, a cybersecurity readiness tool in Power Apps, and over 100 pages for a company-wide document hub.</p>
-            </div>
-          </li>
-          <li class="experience-item reveal">
-            <div class="experience-date">SUMMER 2024</div>
-            <div class="experience-detail">
-              <h3>Research Assistant</h3>
-              <p class="experience-company">CHEO Research Institute <span>· Ottawa, ON</span></p>
-              <p class="experience-description">Designed and ran a data-driven experiment from start to finish.</p>
-            </div>
-          </li>
-          <li class="experience-item reveal">
-            <div class="experience-date">SUMMER 2023</div>
-            <div class="experience-detail">
-              <h3>Research Assistant</h3>
-              <p class="experience-company">Faculty of Medicine, uOttawa <span>· Ottawa, ON</span></p>
-              <p class="experience-description">Turned complex research data into short, clear reports.</p>
-            </div>
-          </li>
+      <div class="section-body">
+        <p class="section-intro reveal">A mix of finance, technology, and research — each role adding a new perspective.</p>
+        <ol class="work-list">
+          <li class="work-item reveal"><div class="work-period">SEP — DEC 2026</div><div class="work-main"><div class="work-title-row"><h3>Internal Audit Student</h3><span class="current-tag"><span class="live-dot" aria-hidden="true"></span> CURRENT</span></div><p class="work-org">Bank of Canada <span>· Ottawa, ON</span></p><p class="work-description">Reviewing IT controls to understand how effectively they work in practice, and identifying opportunities to make them stronger.</p></div><span class="work-arrow" aria-hidden="true">↗</span></li>
+          <li class="work-item reveal"><div class="work-period">JAN — AUG 2026</div><div class="work-main"><h3>Project Control Intern</h3><p class="work-org">RBC <span>· Toronto, ON</span></p><p class="work-description">Supported cybersecurity regulatory work within Technology &amp; Operations. Developed standards for evidence collection and review, and helped introduce AI tools to streamline the process.</p></div><span class="work-arrow" aria-hidden="true">↗</span></li>
+          <li class="work-item reveal"><div class="work-period">MAY — DEC 2025</div><div class="work-main"><h3>Project Control Intern</h3><p class="work-org">Kyndryl <span>· Toronto, ON</span></p><p class="work-description">Supported financial reviews for client projects, built Power BI dashboards and a Power Apps cybersecurity readiness tool, and developed 100+ pages for a company-wide document hub.</p></div><span class="work-arrow" aria-hidden="true">↗</span></li>
+          <li class="work-item reveal"><div class="work-period">SUMMER 2024</div><div class="work-main"><h3>Research Assistant</h3><p class="work-org">CHEO Research Institute <span>· Ottawa, ON</span></p><p class="work-description">Designed and ran a data-driven experiment from start to finish.</p></div><span class="work-arrow" aria-hidden="true">↗</span></li>
+          <li class="work-item reveal"><div class="work-period">SUMMER 2023</div><div class="work-main"><h3>Research Assistant</h3><p class="work-org">Faculty of Medicine, University of Ottawa <span>· Ottawa, ON</span></p><p class="work-description">Translated complex research data into concise, accessible reports.</p></div><span class="work-arrow" aria-hidden="true">↗</span></li>
         </ol>
       </div>
     </section>
 
-    <section class="section container" id="skills" aria-labelledby="skills-title">
+    <div class="container"><div class="rule"></div></div>
+
+    <section class="section container skills" id="skills" aria-labelledby="skills-heading">
       <div class="section-heading reveal">
-        <p class="section-index"><span>03</span> / MY TOOLKIT</p>
-        <h2 id="skills-title">A few things <em>I know.</em></h2>
+        <span class="section-count">03 / SKILLS</span>
+        <h2 id="skills-heading">What I bring <em>along.</em></h2>
       </div>
-      <div class="section-content">
-        <div class="skills-grid">
-          <div class="skill-card reveal">
-            <div class="skill-card-head"><span class="skill-icon" aria-hidden="true">✳</span><span>01 / EXPERTISE</span></div>
-            <h3>What I do</h3>
-            <ul>
-              <li>Auditing &amp; reviewing controls</li>
-              <li>Data analysis &amp; dashboards</li>
-              <li>Project coordination</li>
-              <li>Clear writing &amp; reporting</li>
-            </ul>
-          </div>
-          <div class="skill-card reveal">
-            <div class="skill-card-head"><span class="skill-icon" aria-hidden="true">⌘</span><span>02 / TOOLS</span></div>
-            <h3>What I use</h3>
-            <ul>
-              <li>Excel &amp; Power BI</li>
-              <li>Power Apps &amp; SharePoint</li>
-              <li>Microsoft Project</li>
-              <li>TeamMate+, R, Google Workspace</li>
-            </ul>
-          </div>
-          <div class="skill-card skill-card-wide reveal">
-            <div class="skill-card-head"><span class="skill-icon" aria-hidden="true">◇</span><span>03 / LEARNING</span></div>
-            <h3>Certifications &amp; more</h3>
-            <ul>
-              <li>Internal Audit Essentials, IIA</li>
-              <li>Security+ (Security Goals &amp; Controls), CompTIA</li>
-              <li>Project Fundamentals, PMBOK®</li>
-              <li>Introduction to FinOps</li>
-              <li>Microsoft Project 2016</li>
-              <li>French, DELF B1</li>
-            </ul>
-          </div>
+      <div class="section-body">
+        <p class="section-intro reveal">A practical toolkit built across research, analytics, and collaborative teams.</p>
+        <div class="skill-groups">
+          <div class="skill-group reveal"><div class="skill-group-top"><span>01</span><span class="skill-symbol" aria-hidden="true">↗</span></div><h3>Strengths</h3><ul><li>IT controls &amp; auditing</li><li>Data analysis &amp; dashboards</li><li>Project coordination</li><li>Research &amp; reporting</li></ul></div>
+          <div class="skill-group reveal"><div class="skill-group-top"><span>02</span><span class="skill-symbol" aria-hidden="true">⌘</span></div><h3>Tools</h3><ul><li>Excel &amp; Power BI</li><li>Power Apps &amp; SharePoint</li><li>Microsoft Project</li><li>TeamMate+ &amp; R</li><li>Google Workspace</li></ul></div>
+          <div class="skill-group reveal"><div class="skill-group-top"><span>03</span><span class="skill-symbol" aria-hidden="true">✳</span></div><h3>Learning</h3><ul><li>Internal Audit Essentials · IIA</li><li>Security+ (Security Goals &amp; Controls) · CompTIA</li><li>Project Fundamentals · PMBOK®</li><li>Introduction to FinOps</li><li>Microsoft Project 2016</li><li>French · DELF B1</li></ul></div>
         </div>
       </div>
     </section>
 
-    <section class="contact-section container" id="contact" aria-labelledby="contact-title">
-      <div class="contact-panel reveal">
-        <div class="contact-orb" aria-hidden="true"></div>
-        <div class="contact-inner">
-          <p class="section-index"><span>04</span> / SAY HELLO</p>
-          <h2 id="contact-title">Good things start<br />with a <em>conversation.</em></h2>
-          <p>Open to co-op and new grad roles. The best way to reach me is by email.</p>
-          <a class="contact-cta" href="mailto:janelee2082@gmail.com">janelee2082@gmail.com <span aria-hidden="true">↗</span></a>
-        </div>
-        <span class="contact-corner" aria-hidden="true">LET'S CONNECT / 2026</span>
+    <section class="contact-wrap" id="contact" aria-labelledby="contact-heading">
+      <div class="container contact-content reveal">
+        <div class="contact-top"><span class="section-count">04 / LET'S CONNECT</span><span class="contact-flower" aria-hidden="true">✳</span></div>
+        <h2 id="contact-heading">Have something<br /><em>in mind?</em></h2>
+        <div class="contact-bottom"><p>I'm always open to a thoughtful conversation, an interesting opportunity, or simply saying hello.</p><a href="mailto:janelee2082@gmail.com" class="contact-button">Say hello <span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
   </main>
 
   <footer class="footer container">
-    <a href="#top" class="footer-brand">jl<span>.</span></a>
-    <p>© <span id="year">2026</span> Jane Lee <span class="footer-sep">·</span> Made with intention.</p>
-    <div class="footer-links">
-      <a href="https://www.linkedin.com/in/jane-lee" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-      <a href="#top">Back to top ↑</a>
-    </div>
+    <div><a class="footer-brand" href="#top">Jane Lee<span>.</span></a><p>© <span id="year">2026</span> · Made with curiosity.</p></div>
+    <div class="footer-right"><a href="https://www.linkedin.com/in/jane-lee" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="mailto:janelee2082@gmail.com">Email ↗</a><a href="#top">Back to top ↑</a></div>
   </footer>
 </body>
 </html>
