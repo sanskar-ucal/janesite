@@ -275,3 +275,13 @@ html[data-theme='light'] .brand-avatar { border-color: rgba(40,60,48,.18); }
 .work-main, .work-copy { min-width: 0; }
 .work-org { overflow-wrap: anywhere; }
 .work-team { overflow-wrap: break-word; }
+
+/* Official organization marks: retain original artwork, no CSS color filters. */
+.work-logo-rbc { border-radius: 9px; }
+.work-logo-kyndryl {
+  padding: 3px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.045);
+  border-radius: 9px;
+}
+html[data-theme='light'] .work-logo-kyndryl { background: rgba(255,255,255,.85); }
