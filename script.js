@@ -1,87 +1,135 @@
 (() => {
-  /* ---------- Reveal on scroll ---------- */
-  const groups = new Map();
-  document.querySelectorAll(".reveal").forEach((el) => {
-    const parent = el.parentElement;
-    const i = groups.get(parent) || 0;
-    el.style.setProperty("--d", `${Math.min(i, 5) * 0.06}s`);
-    groups.set(parent, i + 1);
+  'use strict';
+
+  // -------------------------
+  // Theme: system preference + persistent manual override
+  // -------------------------
+  const root = document.documentElement;
+  const themeButton = document.getElementById('theme-toggle');
+  const themeLabel = document.getElementById('theme-label');
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+  function syncTheme() {
+    const isDark = root.dataset.theme !== 'light';
+    themeLabel.textContent = isDark ? 'Light' : 'Dark';
+    themeButton.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} mode`);
+    themeButton.setAttribute('aria-pressed', String(!isDark));
+    if (themeColorMeta) themeColorMeta.content = isDark ? '#161c25' : '#f6f5f1';
+  }
+
+  themeButton.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('jane-theme', next); } catch (_) { /* private mode */ }
+    syncTheme();
   });
+  syncTheme();
 
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
+  // -------------------------
+  // Reveal motion: unobtrusive and accessible
+  // -------------------------
+  const reveals = [...document.querySelectorAll('.reveal')];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('is-visible'));
+  } else {
+    const groups = new Map();
+    for (const el of reveals) {
+      const parent = el.parentElement;
+      const index = groups.get(parent) || 0;
+      el.style.setProperty('--delay', `${Math.min(index, 4) * 0.07}s`);
+      groups.set(parent, index + 1);
+    }
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-visible");
-        revealObserver.unobserve(entry.target);
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
       });
-    },
-    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
-  );
-  document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
+    }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+    reveals.forEach((el) => observer.observe(el));
+  }
 
-  /* ---------- Navbar: scrolled state, active link, sliding indicator ---------- */
-  const nav = document.querySelector(".nav");
-  const navLinks = document.querySelector(".nav-links");
-  const indicator = document.querySelector(".nav-indicator");
-  const links = [...document.querySelectorAll(".nav-link")];
-  const sections = links.map((l) => document.getElementById(l.dataset.section));
+  // -------------------------
+  // Nav: active section & smooth hover indicator
+  // -------------------------
+  const nav = document.querySelector('.nav');
+  const navLinks = document.querySelector('.nav-links');
+  const indicator = document.querySelector('.nav-indicator');
+  const links = [...document.querySelectorAll('.nav-link')];
+  const sections = links.map((link) => document.getElementById(link.dataset.section)).filter(Boolean);
+  let hoveredLink = null;
 
-  const moveIndicator = (link) => {
-    if (!link) {
-      indicator.style.opacity = "0";
+  function moveIndicator(link) {
+    if (!link || getComputedStyle(link).display === 'none') {
+      indicator.style.opacity = '0';
       return;
     }
-    indicator.style.opacity = "1";
     indicator.style.width = `${link.offsetWidth}px`;
     indicator.style.transform = `translateX(${link.offsetLeft}px)`;
-  };
+    indicator.style.opacity = '1';
+  }
 
-  const activeLink = () => links.find((l) => l.classList.contains("is-active"));
+  function currentLink() {
+    return links.find((link) => link.classList.contains('is-active'));
+  }
 
-  links.forEach((link) => link.addEventListener("mouseenter", () => moveIndicator(link)));
-  navLinks.addEventListener("mouseleave", () => moveIndicator(activeLink()));
-
-  const update = () => {
-    nav.classList.toggle("is-scrolled", window.scrollY > 30);
-
-    const probe = window.innerHeight * 0.4;
-    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-    let current = null;
-    sections.forEach((section) => {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= probe && rect.bottom > probe) current = section.id;
-    });
-    if (atBottom) current = sections[sections.length - 1].id;
-
-    links.forEach((link) => link.classList.toggle("is-active", link.dataset.section === current));
-    moveIndicator(activeLink());
-  };
-
-  let ticking = false;
-  const onScroll = () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      update();
-      ticking = false;
-    });
-  };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
-  update();
-
-  /* ---------- Ottawa local time ---------- */
-  const timeEl = document.getElementById("local-time");
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: "America/Toronto",
-    timeZoneName: "short",
+  links.forEach((link) => {
+    link.addEventListener('mouseenter', () => { hoveredLink = link; moveIndicator(link); });
+    link.addEventListener('focus', () => moveIndicator(link));
+    link.addEventListener('blur', () => moveIndicator(hoveredLink || currentLink()));
+    link.addEventListener('click', () => { hoveredLink = null; });
   });
-  const tick = () => (timeEl.textContent = formatter.format(new Date()));
-  tick();
-  setInterval(tick, 30000);
+  navLinks.addEventListener('mouseleave', () => { hoveredLink = null; moveIndicator(currentLink()); });
 
-  document.getElementById("year").textContent = new Date().getFullYear();
+  function updateNav() {
+    nav.classList.toggle('is-scrolled', window.scrollY > 24);
+    const probe = window.innerHeight * 0.38;
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 10;
+    let activeId = null;
+    sections.forEach((section) => {
+      const bounds = section.getBoundingClientRect();
+      if (bounds.top <= probe && bounds.bottom > probe) activeId = section.id;
+    });
+    if (atBottom) activeId = 'contact';
+
+    links.forEach((link) => {
+      const active = link.dataset.section === activeId;
+      link.classList.toggle('is-active', active);
+      if (active) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+    moveIndicator(hoveredLink || currentLink());
+  }
+
+  let frameRequested = false;
+  function scheduleUpdate() {
+    if (frameRequested) return;
+    frameRequested = true;
+    requestAnimationFrame(() => {
+      updateNav();
+      frameRequested = false;
+    });
+  }
+  window.addEventListener('scroll', scheduleUpdate, { passive: true });
+  window.addEventListener('resize', scheduleUpdate);
+  window.addEventListener('load', scheduleUpdate);
+  updateNav();
+
+  // -------------------------
+  // Ottawa local time & current copyright year
+  // -------------------------
+  const timeElement = document.getElementById('local-time');
+  if (timeElement) {
+    const ottawaClock = new Intl.DateTimeFormat('en-CA', {
+      hour: 'numeric', minute: '2-digit', hour12: true,
+      timeZone: 'America/Toronto', timeZoneName: 'short'
+    });
+    function updateClock() { timeElement.textContent = ottawaClock.format(new Date()); }
+    updateClock();
+    setInterval(updateClock, 30_000);
+  }
+  const yearElement = document.getElementById('year');
+  if (yearElement) yearElement.textContent = new Date().getFullYear();
 })();
